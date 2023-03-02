@@ -12341,6 +12341,13 @@ body.offcanvas {
   font-size: 50px;
   color: #000;
 }
+.heading h4, .heading .h4 {
+  margin-bottom: 10px;
+  line-height: 1.5;
+  font-family: "Great Vibes", cursive;
+  font-size: 30px;
+  color: #000;
+}
 .heading p {
   font-size: 18px;
   line-height: 1.5;

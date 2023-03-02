@@ -12847,10 +12847,10 @@ img {
 .timeline::before {
   content: " ";
   top: 50px;
-  bottom: 0;
+  bottom: 50;
   position: absolute;
   width: 1px;
-  height: 65%;
+  height: 80%;
   background-color: #ccc;
   left: 30px;
 }

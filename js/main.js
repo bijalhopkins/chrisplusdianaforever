@@ -3,6 +3,7 @@
 
 	$(window).on('load', function() {
 		$('.loader').delay(600).fadeOut('slow');
+    $('label[name="success-msg"]').hide()
 		setTimeout(function() {
 			$('.cover .display-tc').addClass('fade-in-up');
 		}, 800);
@@ -36,6 +37,8 @@
 			// remove the error class
 			$('.form-group').removeClass('has-error');
 			$('.help-block').remove();
+			$('#loader').show();
+      $('#success-msg').hide();
 			var guestsList = [];
 			$('.guest-list input').each(function() {
 				guestsList.push(this.value);
@@ -56,6 +59,8 @@
 				encode : true
 			}).done(function (data) {
 				// handle errors
+				$('#loader').hide();
+        $('#success-msg').show();
 				if (!data.success) {
 					if (data.errors.name) {
 						$('#name-field').addClass('has-error');
@@ -67,7 +72,8 @@
 					}
 				} else {
 					// display success message
-					$form.html('<div class="message-success">' + data.message + '</div>');
+          $('#success-msg').show();
+					// $form.html('<div class="message-success">' + data.message + '</div>');
 				}
 			}).fail(function (data) {
 				// for debug

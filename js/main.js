@@ -4,6 +4,7 @@
 	$(window).on('load', function() {
 		$('.loader').delay(600).fadeOut('slow');
     $('label[name="success-msg"]').hide()
+    $('label[name="error-msg"]').hide()
 		setTimeout(function() {
 			$('.cover .display-tc').addClass('fade-in-up');
 		}, 800);
@@ -37,49 +38,56 @@
 			// remove the error class
 			$('.form-group').removeClass('has-error');
 			$('.help-block').remove();
-			$('#loader').show();
-      $('#success-msg').hide();
+      $('#error-msg').hide();
 			var guestsList = [];
 			$('.guest-list input').each(function() {
 				guestsList.push(this.value);
 			});
-			// get the form data
-			var formData = {
-				'name' : $('input[name="form-name"]').val(),
-				'email' : $('input[name="form-email"]').val(),
-				'attending': $('.switch-field input[type="radio"]:checked').attr('id'),
-				'guest': $('input[name="form-guest-name"]').val(),
-			};
-			// process the form
-			$.ajax({
-				type : 'POST',
-				url  : 'https://script.google.com/macros/s/AKfycbwdaADFZGXg-d79K0x48rcLJq7SpSf_gSpEsdSnfkeE3xg6jvuH4zz9nrlyS_p13wOA5w/exec',
-				data : formData,
-				dataType : 'json',
-				encode : true
-			}).done(function (data) {
-				// handle errors
-				$('#loader').hide();
-        $('#success-msg').show();
-				if (!data.success) {
-					if (data.errors.name) {
-						$('#name-field').addClass('has-error');
-						$('#name-field').find('.col-sm-6').append('<span class="help-block">' + data.errors.name + '</span>');
-					}
-					if (data.errors.email) {
-						$('#email-field').addClass('has-error');
-						$('#email-field').find('.col-sm-6').append('<span class="help-block">' + data.errors.email + '</span>');
-					}
-				} else {
-					// display success message
+      if (!$('.switch-field input[type="radio"]:checked').attr('id')) {
+        $('#error-msg').show();
+        e.preventDefault();
+      } else {
+        // get the form data
+        var formData = {
+          'name' : $('input[name="form-name"]').val(),
+          'email' : $('input[name="form-email"]').val(),
+          'attending': $('.switch-field input[type="radio"]:checked').attr('id'),
+          'guest': $('input[name="form-guest-name"]').val(),
+        };
+        $('#loader').show();
+        $('#success-msg').hide();
+        $('#error-msg').hide();
+        // process the form
+        $.ajax({
+          type : 'POST',
+          url  : 'https://script.google.com/macros/s/AKfycbwdaADFZGXg-d79K0x48rcLJq7SpSf_gSpEsdSnfkeE3xg6jvuH4zz9nrlyS_p13wOA5w/exec',
+          data : formData,
+          dataType : 'json',
+          encode : true
+        }).done(function (data) {
+          // handle errors
+          $('#loader').hide();
           $('#success-msg').show();
-					// $form.html('<div class="message-success">' + data.message + '</div>');
-				}
-			}).fail(function (data) {
-				// for debug
-				// console.log(data);
-			});
-			e.preventDefault();
+          if (!data.success) {
+            if (data.errors.name) {
+              $('#name-field').addClass('has-error');
+              $('#name-field').find('.col-sm-6').append('<span class="help-block">' + data.errors.name + '</span>');
+            }
+            if (data.errors.email) {
+              $('#email-field').addClass('has-error');
+              $('#email-field').find('.col-sm-6').append('<span class="help-block">' + data.errors.email + '</span>');
+            }
+          } else {
+            // display success message
+            $('#success-msg').show();
+            // $form.html('<div class="message-success">' + data.message + '</div>');
+          }
+        }).fail(function (data) {
+          // for debug
+          // console.log(data);
+        });
+        e.preventDefault();
+      }
 		});
 	}
 

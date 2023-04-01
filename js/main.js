@@ -45,12 +45,12 @@
 				'name' : $('input[name="form-name"]').val(),
 				'email' : $('input[name="form-email"]').val(),
 				'attending': $('.switch-field input[type="radio"]:checked').attr('id'),
-				'guest': guestsList.join(', ')
+				'guest': $('input[name="form-guest-name"]').val(),
 			};
 			// process the form
 			$.ajax({
 				type : 'POST',
-				url  : 'form.php',
+				url  : 'https://script.google.com/macros/s/AKfycbwdaADFZGXg-d79K0x48rcLJq7SpSf_gSpEsdSnfkeE3xg6jvuH4zz9nrlyS_p13wOA5w/exec',
 				data : formData,
 				dataType : 'json',
 				encode : true

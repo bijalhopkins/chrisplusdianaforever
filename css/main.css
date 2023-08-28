@@ -12376,9 +12376,9 @@ body.offcanvas {
           justify-content: center;
   -webkit-box-align: end;
       -ms-flex-align: end;
-          align-items: flex-end;
+          align-items: flex-start;
   height: 100vh;
-  padding-bottom: 80px;
+  padding-top: 150px;
 }
 
 .display-tc h1, .display-tc .h1,
